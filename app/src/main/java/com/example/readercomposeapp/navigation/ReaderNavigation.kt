@@ -1,10 +1,10 @@
 package com.example.readercomposeapp.navigation
 
+import SplashScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.readercomposeapp.screens.SplashScreen
 import com.example.readercomposeapp.screens.details.BookDetailsScreen
 import com.example.readercomposeapp.screens.home.HomeScreen
 import com.example.readercomposeapp.screens.login.LoginScreen
