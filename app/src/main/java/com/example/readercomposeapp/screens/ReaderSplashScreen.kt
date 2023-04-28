@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -14,35 +15,50 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.readercomposeapp.navigation.ReaderScreens
+import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController) {
     Pulsating {
-        Surface(
-        modifier = Modifier
-            .padding(1.dp)
-            .size(330.dp),
-        shape = CircleShape,
-        color = Color.White,
-        border = BorderStroke(4.dp, Color.LightGray)
-    ) {
-            Column(
-                modifier = Modifier.padding(1.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Surface(
+                modifier = Modifier.padding(1.dp).size(330.dp),
+                shape = CircleShape,
+                color = Color.White,
+                border = BorderStroke(4.dp, Color.LightGray)
             ) {
-                Text(text = "A.Reader", style = MaterialTheme.typography.h3, color = Color.Blue)
-                Spacer(modifier = Modifier.padding(10.dp))
-                Text(
-                    text = "Read. improve. Yourself",
-                    style = MaterialTheme.typography.h5,
-                    color = Color.Gray
-                )
+                Column(
+                    modifier = Modifier.padding(1.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = "Reader", style = MaterialTheme.typography.h3, color = Color.Blue)
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    Text(
+                        text = "Read. improve. Yourself",
+                        style = MaterialTheme.typography.h5,
+                        color = Color.Gray
+                    )
+                }
             }
+            NavigateToLogin(navController)
         }
     }
 }
 
+@Composable
+private fun NavigateToLogin(navController: NavController) {
+    LaunchedEffect(Unit) {
+        delay(2000)
+        navController.navigate(ReaderScreens.LoginScreen.name)
+    }
+}
+
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun Pulsating(pulseFraction: Float = 1.2f, durationMillis: Int = 500, content: @Composable () -> Unit) {
     val scaleAnimation = remember {
