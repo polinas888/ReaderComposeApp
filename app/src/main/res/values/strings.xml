@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ReaderComposeApp</string>
+    <string name="valid_credential_text">Please enter valid email and password that is at lease 6 characters</string>
 </resources>
