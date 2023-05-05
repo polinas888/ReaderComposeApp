@@ -1,21 +1,22 @@
 package com.example.readercomposeapp.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -27,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.readercomposeapp.R
 
-
 @Composable
 fun LoginForm() {
     var email by rememberSaveable { mutableStateOf("") }
@@ -37,28 +37,41 @@ fun LoginForm() {
         email.trim().isNotEmpty() && password.trim().isNotEmpty()
     }
     var isLogin by rememberSaveable { mutableStateOf(true) }
+    val isKeyboardOpen = remember { mutableStateOf(false) }
 
-    Text(
-        text = if (!isLogin) LocalContext.current.getString(R.string.valid_credential_text) else "",
-        fontSize = 18.sp,
-        modifier = Modifier.padding(bottom = 8.dp)
-    )
-    InputField(
-        title = "Email",
-        type = KeyboardType.Email,
-        input = email,
-        onInputChanged = { email = it })
-    InputField(
-        title = "Password",
-        type = KeyboardType.Password,
-        input = password,
-        isPassword = true,
-        passwordVisibility = passwordVisibility,
-        onInputChanged = { password = it },
-        onPasswordVisibilityChanged = { passwordVisibility = !passwordVisibility })
-    SubmitButton(modifier = Modifier, valid, isLogin)
-    Spacer(modifier = Modifier.padding(16.dp))
-    SignUpOrLoginChooser(isLogin) { isLogin = !isLogin }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .height(if (isKeyboardOpen.value) 200.dp else 1000.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = if (!isLogin) LocalContext.current.getString(R.string.valid_credential_text) else "",
+            fontSize = 18.sp,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        InputField(
+            title = "Email",
+            type = KeyboardType.Email,
+            input = email,
+            onInputChanged = { email = it },
+            onFocusChanged = { isKeyboardOpen.value = it })
+        InputField(
+            title = "Password",
+            type = KeyboardType.Password,
+            input = password,
+            isPassword = true,
+            passwordVisibility = passwordVisibility,
+            onInputChanged = { password = it },
+            onPasswordVisibilityChanged = { passwordVisibility = !passwordVisibility },
+            onFocusChanged = { isKeyboardOpen.value = it })
+        SubmitButton(modifier = Modifier, valid, isLogin)
+        Spacer(modifier = Modifier.padding(16.dp))
+        SignUpOrLoginChooser(isLogin) { isLogin = !isLogin }
+    }
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -70,7 +83,8 @@ fun InputField(
     isPassword: Boolean = false,
     passwordVisibility: Boolean = false,
     onInputChanged: (String) -> Unit,
-    onPasswordVisibilityChanged: () -> Unit = {}
+    onPasswordVisibilityChanged: () -> Unit = {},
+    onFocusChanged: (Boolean) -> Unit = {}
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -88,6 +102,7 @@ fun InputField(
         ),
         keyboardActions = KeyboardActions(
             onDone = {
+                onFocusChanged(false)
                 keyboardController?.hide()
             }),
         trailingIcon = {
@@ -98,6 +113,7 @@ fun InputField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .onFocusChanged { onFocusChanged(it.isFocused) }
     )
 }
 
