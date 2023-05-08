@@ -1,5 +1,6 @@
 package com.example.readercomposeapp.screens.login
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -109,7 +110,6 @@ fun InputField(
     onFocusChanged: (Boolean) -> Unit = {}
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-
     TextField(
         value = input,
         singleLine = true,
@@ -156,15 +156,39 @@ private fun PasswordVisibilityElement(
 }
 
 @Composable
-fun SubmitButton(modifier: Modifier, valid: Boolean, isLogin: Boolean,  email: String, password: String, navController: NavController, loginViewModel: ReaderLoginViewModel = hiltViewModel()) {
+fun SubmitButton(
+    modifier: Modifier,
+    valid: Boolean,
+    isLogin: Boolean,
+    email: String,
+    password: String,
+    navController: NavController,
+    loginViewModel: ReaderLoginViewModel = hiltViewModel()
+) {
+    val context = LocalContext.current
+
     OutlinedButton(
         onClick = {
             if (isLogin) {
-                loginViewModel.loginWithEmailAndPassword(email, password) {
-                    navController.navigate(ReaderScreens.HomeScreen.name)
+                loginViewModel.loginWithEmailAndPassword(email, password) { success ->
+                    if (success) {
+                        navController.navigate(ReaderScreens.HomeScreen.name)
+                    } else {
+                        Toast.makeText(context, "Wrong email or password", Toast.LENGTH_LONG).show()
+                    }
                 }
             } else {
-
+                loginViewModel.createUserWithEmailAndPassword(email, password) { success ->
+                    if (success) {
+                        navController.navigate(ReaderScreens.HomeScreen.name)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Can't create account with that e-mail or password",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
             }
         },
         modifier
@@ -174,7 +198,12 @@ fun SubmitButton(modifier: Modifier, valid: Boolean, isLogin: Boolean,  email: S
         colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.LightGray),
         enabled = valid
     ) {
-        Text(text = if (isLogin) "Login" else "Create account")
+        if (loginViewModel.loading.value == true) {
+            Text(text = "Creating account...")
+            CircularProgressIndicator(modifier = Modifier.size(24.dp), color = Color.White)
+        } else {
+            Text(text = if (isLogin) "Login" else "Create account")
+        }
     }
 }
 

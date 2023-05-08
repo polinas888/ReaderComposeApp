@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.readercomposeapp.navigation.ReaderScreens
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 @Composable
@@ -26,7 +27,9 @@ fun SplashScreen(navController: NavController) {
             contentAlignment = Alignment.Center
         ) {
             Surface(
-                modifier = Modifier.padding(1.dp).size(330.dp),
+                modifier = Modifier
+                    .padding(1.dp)
+                    .size(330.dp),
                 shape = CircleShape,
                 color = Color.White,
                 border = BorderStroke(4.dp, Color.LightGray)
@@ -54,28 +57,36 @@ fun SplashScreen(navController: NavController) {
 private fun NavigateToLogin(navController: NavController) {
     LaunchedEffect(Unit) {
         delay(2000)
-        navController.navigate(ReaderScreens.LoginScreen.name)
+        if (FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()) {
+            navController.navigate(ReaderScreens.LoginScreen.name)
+        } else {
+            navController.navigate(ReaderScreens.HomeScreen.name)
+        }
     }
 }
 
-@SuppressLint("SuspiciousIndentation")
-@Composable
-fun Pulsating(pulseFraction: Float = 1.2f, durationMillis: Int = 500, content: @Composable () -> Unit) {
-    val scaleAnimation = remember {
-        Animatable(1f) // automatically change value in animateTo
-    }
+    @SuppressLint("SuspiciousIndentation")
+    @Composable
+    fun Pulsating(
+        pulseFraction: Float = 1.2f,
+        durationMillis: Int = 500,
+        content: @Composable () -> Unit
+    ) {
+        val scaleAnimation = remember {
+            Animatable(1f) // automatically change value in animateTo
+        }
 
-    LaunchedEffect(Unit) {
-        val scaleUpAnimation = tween<Float>(durationMillis)
-        val scaleDownAnimation = tween<Float>(durationMillis)
+        LaunchedEffect(Unit) {
+            val scaleUpAnimation = tween<Float>(durationMillis)
+            val scaleDownAnimation = tween<Float>(durationMillis)
 
             scaleAnimation.animateTo(pulseFraction, scaleUpAnimation)
             scaleAnimation.animateTo(1f, scaleDownAnimation)
-    }
+        }
 
-    val scale = scaleAnimation.value
+        val scale = scaleAnimation.value
 
-    Box(modifier = Modifier.scale(scale)) {
-        content()
+        Box(modifier = Modifier.scale(scale)) {
+            content()
+        }
     }
-}
