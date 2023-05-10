@@ -5,8 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.readercomposeapp.R
 import com.example.readercomposeapp.components.BookSearcherTopAppBar
+import com.example.readercomposeapp.components.FloatingAddButton
 import com.example.readercomposeapp.navigation.BookSearcherScreens
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -36,7 +36,10 @@ fun HomeScreen(navController: NavController) {
                 title = "Book Searcher",
                 signout = { navController.navigate(BookSearcherScreens.LoginScreen.name) }
             )
-        }
+        },
+        floatingActionButton = { FloatingAddButton() },
+        floatingActionButtonPosition = FabPosition.End,
+        isFloatingActionButtonDocked = true // Ensure the FAB is always visible
     ) { innerPadding ->
         Column(
             modifier = Modifier
