@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.readercomposeapp.R
 import com.example.readercomposeapp.navigation.ReaderScreens
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
@@ -32,19 +34,23 @@ fun SplashScreen(navController: NavController) {
                     .size(330.dp),
                 shape = CircleShape,
                 color = Color.White,
-                border = BorderStroke(4.dp, Color.LightGray)
+                border = BorderStroke(4.dp, colorResource(R.color.light_blue))
             ) {
                 Column(
                     modifier = Modifier.padding(1.dp),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "Reader", style = MaterialTheme.typography.h3, color = Color.Blue)
+                    Text(
+                        text = "Book Searcher",
+                        style = MaterialTheme.typography.h4,
+                        color = colorResource(R.color.blue)
+                    )
                     Spacer(modifier = Modifier.padding(10.dp))
                     Text(
                         text = "Read. improve. Yourself",
                         style = MaterialTheme.typography.h5,
-                        color = Color.Gray
+                        color = colorResource(R.color.light_blue)
                     )
                 }
             }
@@ -65,28 +71,28 @@ private fun NavigateToLogin(navController: NavController) {
     }
 }
 
-    @SuppressLint("SuspiciousIndentation")
-    @Composable
-    fun Pulsating(
-        pulseFraction: Float = 1.2f,
-        durationMillis: Int = 500,
-        content: @Composable () -> Unit
-    ) {
-        val scaleAnimation = remember {
-            Animatable(1f) // automatically change value in animateTo
-        }
-
-        LaunchedEffect(Unit) {
-            val scaleUpAnimation = tween<Float>(durationMillis)
-            val scaleDownAnimation = tween<Float>(durationMillis)
-
-            scaleAnimation.animateTo(pulseFraction, scaleUpAnimation)
-            scaleAnimation.animateTo(1f, scaleDownAnimation)
-        }
-
-        val scale = scaleAnimation.value
-
-        Box(modifier = Modifier.scale(scale)) {
-            content()
-        }
+@SuppressLint("SuspiciousIndentation")
+@Composable
+fun Pulsating(
+    pulseFraction: Float = 1.2f,
+    durationMillis: Int = 500,
+    content: @Composable () -> Unit
+) {
+    val scaleAnimation = remember {
+        Animatable(1f) // automatically change value in animateTo
     }
+
+    LaunchedEffect(Unit) {
+        val scaleUpAnimation = tween<Float>(durationMillis)
+        val scaleDownAnimation = tween<Float>(durationMillis)
+
+        scaleAnimation.animateTo(pulseFraction, scaleUpAnimation)
+        scaleAnimation.animateTo(1f, scaleDownAnimation)
+    }
+
+    val scale = scaleAnimation.value
+
+    Box(modifier = Modifier.scale(scale)) {
+        content()
+    }
+}
