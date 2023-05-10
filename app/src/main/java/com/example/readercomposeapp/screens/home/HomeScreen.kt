@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.readercomposeapp.R
 import com.example.readercomposeapp.components.BookSearcherTopAppBar
-import com.example.readercomposeapp.navigation.ReaderScreens
+import com.example.readercomposeapp.navigation.BookSearcherScreens
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -25,7 +25,7 @@ fun HomeScreen(navController: NavController) {
                 elevation = 0.dp,
                 iconColor = colorResource(R.color.light_blue),
                 title = "Book Searcher",
-                signout = {navController.navigate(ReaderScreens.LoginScreen.name)}
+                signout = {navController.navigate(BookSearcherScreens.LoginScreen.name)}
             )
         }
     ) { innerPadding ->

@@ -17,7 +17,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.readercomposeapp.R
-import com.example.readercomposeapp.navigation.ReaderScreens
+import com.example.readercomposeapp.navigation.BookSearcherScreens
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
@@ -64,9 +64,9 @@ private fun NavigateToLogin(navController: NavController) {
     LaunchedEffect(Unit) {
         delay(2000)
         if (FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()) {
-            navController.navigate(ReaderScreens.LoginScreen.name)
+            navController.navigate(BookSearcherScreens.LoginScreen.name)
         } else {
-            navController.navigate(ReaderScreens.HomeScreen.name)
+            navController.navigate(BookSearcherScreens.HomeScreen.name)
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.example.readercomposeapp.navigation
 
-enum class ReaderScreens {
+enum class BookSearcherScreens {
     SplashScreen,
     LoginScreen,
     CreateAccountScreen,
@@ -11,7 +11,7 @@ enum class ReaderScreens {
     BookDetailScreen;
 
     companion object {
-        fun fromRoute(route: String?): ReaderScreens
+        fun fromRoute(route: String?): BookSearcherScreens
           = when(route?.substringBefore("/")) {
               SplashScreen.name -> SplashScreen
               LoginScreen.name -> LoginScreen

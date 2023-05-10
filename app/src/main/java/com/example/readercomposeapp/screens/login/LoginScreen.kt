@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.readercomposeapp.R
-import com.example.readercomposeapp.navigation.ReaderScreens
+import com.example.readercomposeapp.navigation.BookSearcherScreens
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -163,7 +163,7 @@ fun SubmitButton(
     email: String,
     password: String,
     navController: NavController,
-    loginViewModel: ReaderLoginViewModel = hiltViewModel()
+    loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
 
@@ -172,7 +172,7 @@ fun SubmitButton(
             if (isLogin) {
                 loginViewModel.loginWithEmailAndPassword(email, password) { success ->
                     if (success) {
-                        navController.navigate(ReaderScreens.HomeScreen.name)
+                        navController.navigate(BookSearcherScreens.HomeScreen.name)
                     } else {
                         Toast.makeText(context, "Wrong email or password", Toast.LENGTH_LONG).show()
                     }
@@ -180,7 +180,7 @@ fun SubmitButton(
             } else {
                 loginViewModel.createUserWithEmailAndPassword(email, password) { success ->
                     if (success) {
-                        navController.navigate(ReaderScreens.HomeScreen.name)
+                        navController.navigate(BookSearcherScreens.HomeScreen.name)
                     } else {
                         Toast.makeText(
                             context,

@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ReaderLoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel @Inject constructor() : ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading = _loading
     private val auth = Firebase.auth

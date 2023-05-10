@@ -13,28 +13,28 @@ import com.example.readercomposeapp.screens.stats.StatsScreen
 import com.example.readercomposeapp.screens.update.BookUpdateScreen
 
 @Composable
-fun ReaderNavigation() {
+fun BookSearcherNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = ReaderScreens.SplashScreen.name) {
-        composable(ReaderScreens.SplashScreen.name) {
+    NavHost(navController = navController, startDestination = BookSearcherScreens.SplashScreen.name) {
+        composable(BookSearcherScreens.SplashScreen.name) {
             SplashScreen(navController = navController)
         }
-        composable(ReaderScreens.HomeScreen.name) {
+        composable(BookSearcherScreens.HomeScreen.name) {
             HomeScreen(navController=navController)
         }
-        composable(ReaderScreens.BookDetailScreen.name) {
+        composable(BookSearcherScreens.BookDetailScreen.name) {
             BookDetailsScreen(navController=navController)
         }
-        composable(ReaderScreens.BookUpdateScreen.name) {
+        composable(BookSearcherScreens.BookUpdateScreen.name) {
             BookUpdateScreen(navController=navController)
         }
-        composable(ReaderScreens.LoginScreen.name) {
+        composable(BookSearcherScreens.LoginScreen.name) {
             LoginScreen(navController=navController)
         }
-        composable(ReaderScreens.StatsScreen.name) {
+        composable(BookSearcherScreens.StatsScreen.name) {
             StatsScreen(navController=navController)
         }
-        composable(ReaderScreens.BookSearchScreen.name) {
+        composable(BookSearcherScreens.BookSearchScreen.name) {
             BookSearchScreen(navController=navController)
         }
     }

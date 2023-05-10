@@ -9,7 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.readercomposeapp.navigation.ReaderNavigation
+import com.example.readercomposeapp.navigation.BookSearcherNavigation
 import com.example.readercomposeapp.ui.theme.ReaderComposeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,7 +31,7 @@ fun ReaderApp() {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background,
         ) {
-        ReaderNavigation()
+        BookSearcherNavigation()
     }
 }
 
