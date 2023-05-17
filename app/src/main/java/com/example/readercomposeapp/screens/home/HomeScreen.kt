@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.readercomposeapp.R
+import com.example.readercomposeapp.components.BookCard
 import com.example.readercomposeapp.components.BookSearcherTopAppBar
 import com.example.readercomposeapp.components.FloatingAddButton
 import com.example.readercomposeapp.navigation.BookSearcherScreens
@@ -56,6 +57,11 @@ fun HomeScreen(navController: NavController) {
                 Text("Your reading\nactivity right now...", fontSize = 20.sp)
                 UserImageAndName(navController)
             }
+            BookCard( imageUrl = "http://books.google.com/books/content?id=M7ngCAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+                title = "Flutter in Action",
+                author = "Author",
+                reading = "Reading")
+            Text(text = "Reading list", modifier = Modifier.padding(start = 20.dp), fontSize = 20.sp)
         }
     }
 }
